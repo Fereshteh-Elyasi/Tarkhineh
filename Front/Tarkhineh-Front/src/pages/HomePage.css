@@ -1,0 +1,33 @@
+.img-main-dish,
+.img-appetizer,
+.img-dessert,
+.img-drink {
+  position: absolute;
+  max-width: none;
+}
+
+/* تنظیم اندازه و جابه‌جایی دقیق تصاویر طبق طرح */
+.img-main-dish {
+  width: 460px;
+  height: auto;
+  top: -35px;
+}
+
+.img-appetizer {
+  width: 250px;
+  height: auto;
+  top: -70px;
+}
+
+.img-dessert {
+  width: 330px;
+  height: auto;
+  top: 13px;
+  left: 30px;
+}
+
+.img-drink {
+  width: 200px;
+  height: auto;
+  top: -60px;
+}
