@@ -6,6 +6,38 @@
 
 ---
 
+## شروع سریع
+
+کدها داخل زیرپوشه هستند:
+
+| بخش | مسیر |
+|------|------|
+| فرانت‌اند | `Front/Tarkhineh-Front` |
+| بک‌اند | `Back/tarkhineh-Back` |
+
+### بک‌اند (ترمینال ۱)
+
+```bash
+cd Back/tarkhineh-Back
+# دیتابیس را بسازید (یک‌بار):
+mysql -u root -p --default-character-set=utf8mb4 < database/schema.sql
+mysql -u root -p --default-character-set=utf8mb4 < database/seed.sql
+# در config/config.php رمز دیتابیس را تنظیم کنید، سپس:
+php -S localhost:8000 index.php
+```
+
+### فرانت‌اند (ترمینال ۲)
+
+```bash
+cd Front/Tarkhineh-Front
+npm install
+npm run dev
+```
+
+سپس مرورگر را روی آدرس Vite (معمولاً `http://localhost:5173`) باز کنید.
+
+---
+
 ## ویژگی‌ها
 
 - منوی غذا با دسته‌بندی و جستجو
@@ -26,18 +58,8 @@
 Tarkhineh/
 ├── Front/
 │   └── Tarkhineh-Front/     # اپلیکیشن React (Vite)
-│       ├── src/
-│       ├── public/
-│       ├── package.json
-│       └── vite.config.js
 ├── Back/
 │   └── tarkhineh-Back/      # API با PHP خام
-│       ├── index.php        # روتر اصلی
-│       ├── config/          # تنظیمات و اتصال دیتابیس
-│       ├── controllers/     # کنترلرها
-│       ├── core/            # Auth, Request, Response
-│       ├── database/        # schema.sql و seed
-│       └── uploads/         # تصاویر منو و شعب
 ├── .gitignore
 └── README.md
 ```
@@ -55,7 +77,7 @@ Tarkhineh/
 
 ---
 
-## راه‌اندازی بک‌اند (PHP + MySQL)
+## راه‌اندازی کامل بک‌اند
 
 ```bash
 cd Back/tarkhineh-Back
@@ -88,32 +110,25 @@ define('CORS_ALLOWED_ORIGIN', 'http://localhost:5173');
 php -S localhost:8000 index.php
 ```
 
-API روی این آدرس در دسترس است:
-
-```text
-http://localhost:8000/api/...
-```
+API: `http://localhost:8000/api/...`
 
 ---
 
-## راه‌اندازی فرانت‌اند (React)
+## راه‌اندازی کامل فرانت‌اند
 
 ```bash
 cd Front/Tarkhineh-Front
-
 npm install
 npm run dev
 ```
 
-معمولاً روی `http://localhost:5173` بالا می‌آید.
-
-برای اتصال به API واقعی، در ریشه فرانت یک فایل `.env` بسازید:
+برای اتصال به API، فایل `.env` در همین پوشه:
 
 ```env
 VITE_API_BASE_URL=http://localhost:8000/api
 ```
 
-### ساخت نسخه نهایی
+ساخت نسخه نهایی:
 
 ```bash
 npm run build
@@ -123,11 +138,7 @@ npm run build
 
 ## API اصلی
 
-همه پاسخ‌ها JSON هستند. مسیرهایی که با 🔒 مشخص شده‌اند نیاز به هدر زیر دارند:
-
-```text
-Authorization: Bearer <token>
-```
+مسیرهای 🔒 نیاز به هدر `Authorization: Bearer <token>` دارند.
 
 ### احراز هویت
 | متد | مسیر | توضیح |
@@ -163,41 +174,19 @@ Authorization: Bearer <token>
 
 ## تکنولوژی‌ها
 
-**فرانت‌اند**
-- React ۱۹
-- Vite ۸
-- Tailwind CSS ۳
-- React Router ۷
-- Swiper
-- Neshan Maps (نقشه)
-- React Icons
-
-**بک‌اند**
-- PHP ۸.۳ (بدون فریم‌ورک)
-- MySQL / MariaDB
-- PDO
-- احراز هویت با Bearer Token + OTP
+**فرانت‌اند:** React ۱۹ · Vite ۸ · Tailwind CSS · React Router · Swiper · Neshan Maps  
+**بک‌اند:** PHP ۸.۳ · MySQL · PDO · Bearer Token + OTP
 
 ---
 
 ## نکات مهم
 
-1. فولدر `node_modules` در ریپو نیست؛ با `npm install` نصب شود.
-2. رمز دیتابیس را فقط در `config/config.php` محلی خودتان بگذارید و رمز واقعی را در گیت کامیت نکنید.
-3. در محیط Production مقدار `APP_DEBUG` را `false` کنید و از HTTPS استفاده کنید.
-4. ارسال SMS واقعی در `AuthController::sendOtp` هنوز پیاده‌سازی نشده و در حالت دیباگ کد OTP در پاسخ برمی‌گردد.
-5. درگاه پرداخت به صورت شبیه‌سازی شده است و برای استفاده واقعی باید به درگاه بانکی وصل شود.
+1. پوشه‌های اجرایی همان `Front/Tarkhineh-Front` و `Back/tarkhineh-Back` هستند.
+2. `node_modules` در ریپو نیست؛ با `npm install` نصب شود.
+3. رمز دیتابیس را فقط محلی در `config/config.php` بگذارید.
+4. OTP و درگاه پرداخت در حالت فعلی شبیه‌سازی شده‌اند (مناسب نمونه‌کار).
+5. جزئیات بیشتر بک‌اند: `Back/tarkhineh-Back/README.md`
 
 ---
 
-## مستندات بیشتر بک‌اند
-
-جزئیات کامل‌تر API، ساختار جداول و نحوه اتصال فرانت به بک‌اند در این فایل آمده است:
-
-`Back/tarkhineh-Back/README.md`
-
----
-
-## مجوز
-
-این پروژه برای اهداف آموزشی و نمونه‌کار ساخته شده است.
+این پروژه برای نمونه‌کار و اهداف آموزشی آماده شده است.
